@@ -40,6 +40,8 @@
 #elif ARCH_ARM
   static const char* ARCH_STR = "ARM build";
   #include "../arm/midr.h"
+#elif ARCH_LOONGARCH
+  static const char* ARCH_STR = "LoongArch build";
 #elif ARCH_RISCV
   static const char* ARCH_STR = "RISC-V build";
   #include "../riscv/riscv.h"

@@ -26,6 +26,8 @@ enum {
   CPU_VENDOR_SIFIVE,
   CPU_VENDOR_THEAD,
   CPU_VENDOR_SPACEMIT,
+// ARCH_LOONGARCH
+  CPU_VENDOR_LOONGSON,
 // OTHERS
   CPU_VENDOR_UNKNOWN,
   CPU_VENDOR_INVALID
@@ -152,7 +154,7 @@ struct cpuInfo {
 
   // Similar but not exactly equal
   // to struct features
-#ifdef ARCH_RISCV
+#if defined(ARCH_RISCV) || defined(ARCH_LOONGARCH)
   struct extensions* ext;
 #else
   struct features* feat;
@@ -181,7 +183,7 @@ struct cpuInfo {
   uint32_t midr;
 #endif
 
-#if defined(ARCH_ARM) || defined(ARCH_RISCV)
+#if defined(ARCH_ARM) || defined(ARCH_RISCV) || defined(ARCH_LOONGARCH)
   struct system_on_chip* soc;
 #endif
 

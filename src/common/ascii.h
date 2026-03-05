@@ -464,6 +464,20 @@ $C1 :##########:              \
 $C1    :#######:              \
 $C1       :####:              \
 $C1         :##:              "
+#define ASCII_LOONGSON \
+"$C1                                        \
+$C1           ,-----------------,            \
+$C1          |                 |            \
+$C1          |   LOONGSON      |            \
+$C1          |                 |            \
+$C1          |-----------------|            \
+$C1          |                 |            \
+$C1          |   LOONGARCH     |            \
+$C1          |                 |            \
+$C1           '---------------'             \
+$C1                                        "
+
+
 
 // --------------------- LONG LOGOS ------------------------- //
 #define ASCII_AMD_L \
@@ -645,6 +659,7 @@ asciiL logo_nxp         = { ASCII_NXP,         55,  8, false, {C_FG_YELLOW, C_FG
 asciiL logo_amlogic     = { ASCII_AMLOGIC,     58,  8, false, {C_FG_BLUE},                                    {C_FG_BLUE,    C_FG_B_WHITE} };
 asciiL logo_marvell     = { ASCII_MARVELL,     56, 10, false, {C_FG_B_BLACK},                                 {C_FG_B_BLACK, C_FG_B_WHITE} };
 asciiL logo_spacemit    = { ASCII_SPACEMIT,    27, 18, false, {C_FG_B_GREEN},                                 {C_FG_B_GREEN, C_FG_B_WHITE} };
+asciiL logo_loongson    = { ASCII_LOONGSON,    42, 11, false, {C_FG_RED, C_FG_WHITE}, {C_FG_RED, C_FG_WHITE} };
 
 // Long variants          | ----------------------------------------------------------------------------------------------------------------|
 asciiL logo_amd_l       = { ASCII_AMD_L,       62, 19, true,  {C_BG_WHITE, C_BG_GREEN},                       {C_FG_WHITE, C_FG_GREEN}     };

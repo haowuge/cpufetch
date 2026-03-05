@@ -22,6 +22,10 @@
   #include "../arm/soc.h"
   #include "../arm/socs.h"
   #include "../common/soc.h"
+#elif ARCH_LOONGARCH
+  #include "../loongarch/loongarch.h"
+  #include "../loongarch/uarch.h"
+  #include "../loongarch/soc.h"
 #elif ARCH_RISCV
   #include "../riscv/riscv.h"
   #include "../riscv/uarch.h"
@@ -56,7 +60,7 @@ enum {
   ATTRIBUTE_NAME,
 #elif defined(ARCH_PPC)
   ATTRIBUTE_PART_NUMBER,
-#elif defined(ARCH_ARM) || defined(ARCH_RISCV)
+#elif defined(ARCH_ARM) || defined(ARCH_RISCV) || defined(ARCH_LOONGARCH)
   ATTRIBUTE_SOC,
 #endif
 #if defined(ARCH_X86) || defined(ARCH_ARM)
@@ -79,6 +83,8 @@ enum {
   ATTRIBUTE_FEATURES,
 #elif ARCH_RISCV
   ATTRIBUTE_EXTENSIONS,
+#elif ARCH_LOONGARCH
+  ATTRIBUTE_EXTENSIONS,
 #endif
   ATTRIBUTE_L1i,
   ATTRIBUTE_L1d,
@@ -92,7 +98,7 @@ static const AttributeField ATTRIBUTE_INFO[] = {
   { ATTRIBUTE_NAME,        "Name:",              "Name:"          },
 #elif defined(ARCH_PPC)
   { ATTRIBUTE_PART_NUMBER, "Part Number:",       "P/N:"           },
-#elif defined(ARCH_ARM) || defined(ARCH_RISCV)
+#elif defined(ARCH_ARM) || defined(ARCH_RISCV) || defined(ARCH_LOONGARCH)
   { ATTRIBUTE_SOC,         "SoC:",               "SoC:"           },
 #endif
 #if defined(ARCH_X86) || defined(ARCH_ARM)
@@ -114,6 +120,8 @@ static const AttributeField ATTRIBUTE_INFO[] = {
 #elif ARCH_ARM
   { ATTRIBUTE_FEATURES,    "Features: ",         "Features: "     },
 #elif ARCH_RISCV
+  { ATTRIBUTE_EXTENSIONS,  "Extensions: ",       "Extensions: "   },
+#elif ARCH_LOONGARCH
   { ATTRIBUTE_EXTENSIONS,  "Extensions: ",       "Extensions: "   },
 #endif
   { ATTRIBUTE_L1i,         "L1i Size:",          "L1i Size:"      },
@@ -375,6 +383,11 @@ void choose_ascii_art(struct ascii* art, struct color** cs, struct terminal* ter
   else {
     art->art = choose_ascii_art_aux(&logo_arm_l, &logo_arm, term, lf);
   }
+#elif ARCH_LOONGARCH
+  if(art->vendor == SOC_VENDOR_LOONGSON)
+    art->art = &logo_loongson;
+  else
+    art->art = &logo_unknown;
 #elif ARCH_RISCV
   if(art->vendor == SOC_VENDOR_SIFIVE)
     art->art = choose_ascii_art_aux(&logo_sifive_l, &logo_sifive, term, lf);
@@ -948,7 +961,7 @@ bool print_cpufetch_arm(struct cpuInfo* cpu, STYLE s, struct color** cs, struct 
 }
 #endif
 
-#ifdef ARCH_RISCV
+#if defined(ARCH_RISCV) || defined(ARCH_LOONGARCH)
 void print_ascii_riscv(struct ascii* art, uint32_t la, int32_t termw, bool use_short, bool* extensions_mask) {
   struct ascii_logo* logo = art->art;
   int attr_to_print = 0;
@@ -1117,6 +1130,8 @@ bool print_cpufetch(struct cpuInfo* cpu, STYLE s, struct color** cs, bool show_f
 #elif ARCH_ARM
   return print_cpufetch_arm(cpu, s, cs, term);
 #elif ARCH_RISCV
+  return print_cpufetch_riscv(cpu, s, cs, term);
+#elif ARCH_LOONGARCH
   return print_cpufetch_riscv(cpu, s, cs, term);
 #endif
 }

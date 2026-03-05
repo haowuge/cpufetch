@@ -3,6 +3,9 @@
 
 typedef int STYLE;
 
+// Forward declaration
+struct terminal;
+
 #include "args.h"
 
 #ifdef ARCH_X86
@@ -13,6 +16,8 @@ typedef int STYLE;
   #include "../arm/midr.h"
 #elif ARCH_RISCV
   #include "../riscv/riscv.h"
+#elif ARCH_LOONGARCH
+  #include "../loongarch/loongarch.h"
 #endif
 
 //                              +-----------------------------------+-----------------------+
@@ -28,6 +33,10 @@ typedef int STYLE;
 
 #ifdef ARCH_X86
 void print_levels(struct cpuInfo* cpu);
+#endif
+
+#if defined(ARCH_RISCV) || defined(ARCH_LOONGARCH)
+bool print_cpufetch_riscv(struct cpuInfo* cpu, STYLE s, struct color** cs, struct terminal* term);
 #endif
 
 bool print_cpufetch(struct cpuInfo* cpu, STYLE s, struct color** cs, bool fcpuname);

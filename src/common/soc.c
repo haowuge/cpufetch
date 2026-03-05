@@ -3,6 +3,8 @@
   #include "../arm/socs.h"
 #elif ARCH_RISCV
   #include "../riscv/socs.h"
+#elif ARCH_LOONGARCH
+  #include "../loongarch/socs.h"
 #endif
 #include "udev.h"
 #include "../common/global.h"
@@ -31,8 +33,39 @@ static char* soc_trademark_string[] = {
   [SOC_VENDOR_SIPEED]     = "Sipeed ",
   [SOC_VENDOR_SPACEMIT]   = "SpacemiT ",
   // ARM & RISC-V
-  [SOC_VENDOR_ALLWINNER]  = "Allwinner "
+  [SOC_VENDOR_ALLWINNER]  = "Allwinner ",
+  // LOONGARCH
+  [SOC_VENDOR_LOONGSON]   = ""
 };
+
+VENDOR get_soc_vendor_from_soc(SOC soc_model) {
+  // ARM vendors
+  if(soc_model >= 0 && soc_model <= 100) return SOC_VENDOR_SNAPDRAGON;  // Approximate range
+  if(soc_model >= 101 && soc_model <= 200) return SOC_VENDOR_MEDIATEK;
+  if(soc_model >= 201 && soc_model <= 300) return SOC_VENDOR_EXYNOS;
+  if(soc_model >= 301 && soc_model <= 400) return SOC_VENDOR_KIRIN;
+  if(soc_model >= 401 && soc_model <= 500) return SOC_VENDOR_KUNPENG;
+  if(soc_model >= 501 && soc_model <= 600) return SOC_VENDOR_BROADCOM;
+  if(soc_model >= 601 && soc_model <= 700) return SOC_VENDOR_APPLE;
+  if(soc_model >= 701 && soc_model <= 800) return SOC_VENDOR_ROCKCHIP;
+  if(soc_model >= 801 && soc_model <= 900) return SOC_VENDOR_GOOGLE;
+  if(soc_model >= 901 && soc_model <= 1000) return SOC_VENDOR_NVIDIA;
+  if(soc_model >= 1001 && soc_model <= 1100) return SOC_VENDOR_AMPERE;
+  if(soc_model >= 1101 && soc_model <= 1200) return SOC_VENDOR_NXP;
+  if(soc_model >= 1201 && soc_model <= 1300) return SOC_VENDOR_AMLOGIC;
+  if(soc_model >= 1301 && soc_model <= 1400) return SOC_VENDOR_MARVELL;
+  // RISC-V vendors
+  if(soc_model >= 1401 && soc_model <= 1500) return SOC_VENDOR_SIFIVE;
+  if(soc_model >= 1501 && soc_model <= 1600) return SOC_VENDOR_STARFIVE;
+  if(soc_model >= 1601 && soc_model <= 1700) return SOC_VENDOR_SIPEED;
+  if(soc_model >= 1701 && soc_model <= 1800) return SOC_VENDOR_SPACEMIT;
+  // ARM & RISC-V
+  if(soc_model >= 1801 && soc_model <= 1900) return SOC_VENDOR_ALLWINNER;
+  // LOONGARCH
+  if(soc_model >= 1901 && soc_model <= 2000) return SOC_VENDOR_LOONGSON;
+  
+  return SOC_VENDOR_UNKNOWN;
+}
 
 VENDOR get_soc_vendor(struct system_on_chip* soc) {
   return soc->vendor;

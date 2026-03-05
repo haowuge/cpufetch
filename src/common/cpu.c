@@ -16,6 +16,8 @@
   #include "../arm/uarch.h"
 #elif ARCH_RISCV
   #include "../riscv/uarch.h"
+#elif ARCH_LOONGARCH
+  #include "../loongarch/uarch.h"
 #endif
 
 #define STRING_YES        "Yes"

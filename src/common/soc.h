@@ -9,6 +9,7 @@
 #include <stdint.h>
 
 #define UNKNOWN -1
+#define SOC_MODEL_UNKNOWN -1
 
 typedef int32_t SOC;
 
@@ -35,7 +36,9 @@ enum {
   SOC_VENDOR_SIPEED,
   SOC_VENDOR_SPACEMIT,
   // ARM & RISC-V
-  SOC_VENDOR_ALLWINNER
+  SOC_VENDOR_ALLWINNER,
+  // LOONGARCH
+  SOC_VENDOR_LOONGSON
 };
 
 struct system_on_chip {
@@ -49,6 +52,7 @@ struct system_on_chip {
 struct system_on_chip* get_soc(struct cpuInfo* cpu);
 char* get_soc_name(struct system_on_chip* soc);
 VENDOR get_soc_vendor(struct system_on_chip* soc);
+VENDOR get_soc_vendor_from_soc(SOC soc_model);
 bool match_soc(struct system_on_chip* soc, char* raw_name, char* expected_name, char* soc_name, SOC soc_model, int32_t process);
 char* get_str_process(struct system_on_chip* soc);
 void fill_soc(struct system_on_chip* soc, char* soc_name, SOC soc_model, int32_t process);
